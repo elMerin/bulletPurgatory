@@ -1,18 +1,23 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Player/player.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://WhiteColor.shader" type="Shader" id=3]
-[ext_resource path="res://Overlap/Hurtbox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Overlap/Hurtbox.gd" type="Script" id=4]
 [ext_resource path="res://Player/BulletSpawner.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Music and Sounds/Hurt.wav" type="AudioStream" id=6]
+[ext_resource path="res://Fonts/Manrope-Regular.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://Music and Sounds/Evade.wav" type="AudioStream" id=7]
+[ext_resource path="res://Music and Sounds/Hit.wav" type="AudioStream" id=8]
+[ext_resource path="res://Music and Sounds/error.wav" type="AudioStream" id=9]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 3 )
 shader_param/active = false
 
-[sub_resource type="Animation" id=2]
-resource_name = "Attack"
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 57.6963, 29.2119 )
+
+[sub_resource type="Animation" id=3]
 length = 1.5
 step = 0.01
 tracks/0/type = "method"
@@ -49,22 +54,20 @@ tracks/1/keys = {
 "method": "fire"
 } ]
 }
-tracks/2/type = "audio"
-tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/type = "value"
+tracks/2/path = NodePath("CanvasLayer/Control/ColorRect2/ColorRect:rect_size")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"clips": [ {
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource( 6 )
-} ],
-"times": PoolRealArray( 0 )
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 54 ), Vector2( 346, 54 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("CanvasLayer/ColorRect:rect_size")
+tracks/3/path = NodePath("CanvasLayer/Control/ColorRect2/ColorRect:color")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -72,24 +75,11 @@ tracks/3/enabled = true
 tracks/3/keys = {
 "times": PoolRealArray( 0, 1.5 ),
 "transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 54 ), Vector2( 346, 54 ) ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("CanvasLayer/ColorRect:color")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0, 1.5 ),
-"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ Color( 1, 1, 1, 0.498039 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "Roll"
+[sub_resource type="Animation" id=4]
 step = 0.05
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -98,7 +88,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.1, 1 ),
+"times": PoolRealArray( 0.2, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [  ],
@@ -108,25 +98,60 @@ tracks/0/keys = {
 "method": "roll_cooldown_finished"
 } ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("CanvasLayer2/Control/ColorRect2/ColorRect:rect_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 54 ), Vector2( 346, 54 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CanvasLayer2/Control/ColorRect2/ColorRect:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Color( 1, 1, 1, 0.498039 ), Color( 1, 1, 1, 1 ) ]
+}
 
-[sub_resource type="Animation" id=4]
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:material:shader_param/active")
+[sub_resource type="Animation" id=6]
+length = 0.1
+loop = true
+tracks/0/type = "method"
+tracks/0/path = NodePath("BulletSpawner")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "fire"
+} ]
 }
 
-[sub_resource type="CapsuleShape2D" id=5]
-radius = 8.74756
-height = 46.9391
+[sub_resource type="DynamicFont" id=7]
+size = 40
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 40
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 0, 3.80139 )
@@ -136,34 +161,47 @@ script = ExtResource( 2 )
 material = SubResource( 1 )
 texture = ExtResource( 1 )
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -67.5776, 20.1788, -49.6287, 4.38373, -31.3207, -5.21899, -22.6154, -9.16785, -18.4871, -14.373, -13.1024, -18.4116, -2.69214, -21.014, 6.37213, -20.8345, 13.8209, -17.514, 19.8339, -12.3088, 25.0391, -8.36017, 36.0325, -5.24945, 44.7287, 0.889404, 53.425, 8.73334, 62.2065, 15.2129, 48.5654, 12.1442, 31.3434, 7.96655, 15.0592, 5.74988, -3.86798, 5.32343, -19.6406, 6.09076, -38.9941, 9.07489, -55.3636, 14.6166 )
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.237823, -4.68871 )
+shape = SubResource( 2 )
 
 [node name="Attack" type="AnimationPlayer" parent="."]
-anims/Attack = SubResource( 2 )
+anims/Attack = SubResource( 3 )
 
 [node name="Roll" type="AnimationPlayer" parent="."]
-anims/Roll = SubResource( 6 )
+anims/Roll = SubResource( 4 )
 
-[node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Blink = SubResource( 4 )
+[node name="Quickfire" type="AnimationPlayer" parent="."]
+anims/Quickfire = SubResource( 6 )
 
-[node name="Hurtbox" parent="." instance=ExtResource( 4 )]
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource( 4 )
 
-[node name="CollisionShape2D" parent="Hurtbox" index="0"]
-position = Vector2( 0.732544, -0.488281 )
-rotation = 1.5708
-shape = SubResource( 5 )
+[node name="Timer" type="Timer" parent="Hurtbox"]
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Hurtbox"]
+polygon = PoolVector2Array( -67.5776, 20.1788, -49.6287, 4.38373, -31.3207, -5.21899, -22.6154, -9.16785, -18.4871, -14.373, -13.1024, -18.4116, -2.69214, -21.014, 6.37213, -20.8345, 13.8209, -17.514, 19.8339, -12.3088, 25.0391, -8.36017, 36.0325, -5.24945, 44.7287, 0.889404, 53.425, 8.73334, 62.2065, 15.2129, 48.5654, 12.1442, 31.3434, 7.96655, 15.0592, 5.74988, -3.86798, 5.32343, -19.6406, 6.09076, -38.9941, 9.07489, -55.3636, 14.6166 )
 
 [node name="BulletSpawner" parent="." instance=ExtResource( 5 )]
 position = Vector2( 0, -37.358 )
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-volume_db = -10.0
+direction = Vector2( 0, -1000 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+scale = Vector2( 0.7, 0.7 )
+transform = Transform2D( 0.7, 0, 0, 0.7, 0, 0 )
 
-[node name="ColorRect2" type="ColorRect" parent="CanvasLayer"]
+[node name="Control" type="Control" parent="CanvasLayer"]
+margin_left = 1021.24
+margin_top = 359.697
+margin_right = 1061.24
+margin_bottom = 399.697
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Control"]
 margin_left = 11.6329
 margin_top = 814.17
 margin_right = 367.633
@@ -173,13 +211,87 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-margin_left = 17.35
-margin_top = 821.3
-margin_right = 363.35
-margin_bottom = 875.3
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/ColorRect2"]
+margin_left = 5.31988
+margin_top = 6.33557
+margin_right = 351.32
+margin_bottom = 60.3356
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[editable path="Hurtbox"]
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+margin_left = 11.8485
+margin_top = 762.739
+margin_right = 95.8485
+margin_bottom = 831.739
+custom_fonts/font = SubResource( 7 )
+text = "Fire"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+scale = Vector2( 0.7, 0.7 )
+transform = Transform2D( 0.7, 0, 0, 0.7, 0, 0 )
+
+[node name="Control" type="Control" parent="CanvasLayer2"]
+margin_left = -577.959
+margin_top = 360.617
+margin_right = -537.959
+margin_bottom = 400.617
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer2/Control"]
+margin_left = 620.683
+margin_top = 815.88
+margin_right = 976.683
+margin_bottom = 881.88
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2/Control/ColorRect2"]
+margin_left = 5.31988
+margin_top = 6.33557
+margin_right = 351.32
+margin_bottom = 60.3356
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer2/Control"]
+margin_left = 621.48
+margin_top = 760.831
+margin_right = 774.48
+margin_bottom = 829.831
+custom_fonts/font = SubResource( 8 )
+text = "Dodge"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuickfireTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="attackSpeedBoostTimer" type="Timer" parent="."]
+wait_time = 15.0
+
+[node name="speedBoostTimer" type="Timer" parent="."]
+wait_time = 15.0
+
+[node name="evade" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="fail" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+[connection signal="timeout" from="Hurtbox/Timer" to="Hurtbox" method="_on_Timer_timeout"]
+[connection signal="timeout" from="QuickfireTimer" to="." method="_on_QuickfireTimer_timeout"]
+[connection signal="timeout" from="attackSpeedBoostTimer" to="." method="_on_attackSpeedBoostTimer_timeout"]
+[connection signal="timeout" from="speedBoostTimer" to="." method="_on_speedBoostTimer_timeout"]

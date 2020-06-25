@@ -1,0 +1,73 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Fonts/Manrope-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://UI/dialogIcon.png" type="Texture" id=2]
+[ext_resource path="res://Dialog/DialogBox.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 30
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Idle"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 749.386, 221.809 ), Vector2( 749.386, 231.809 ) ]
+}
+
+[node name="DialogBox" type="Control"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -400.383
+margin_top = -426.808
+margin_right = 404.617
+margin_bottom = -136.808
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = 15.0
+margin_right = -15.0
+margin_bottom = -15.0
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Icon" type="Sprite" parent="."]
+visible = false
+position = Vector2( 749.386, 221.809 )
+texture = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Icon"]
+autoplay = "Idle"
+anims/Idle = SubResource( 2 )
+
+[node name="TextTimer" type="Timer" parent="."]
+wait_time = 0.05
+[connection signal="timeout" from="TextTimer" to="." method="_on_TextTimer_timeout"]

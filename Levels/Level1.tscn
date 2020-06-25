@@ -1,0 +1,90 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Levels/Level1.gd" type="Script" id=5]
+[ext_resource path="res://Dialog/Dialog.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=8]
+[ext_resource path="res://UI/HealthUI.tscn" type="PackedScene" id=9]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 94.0905, 594.858 )
+
+[node name="Level1" type="Node2D"]
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ],
+"_edit_vertical_guides_": [  ]
+}
+
+[node name="Player" parent="." instance=ExtResource( 8 )]
+position = Vector2( 500.692, 710.749 )
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+position = Vector2( -95.6663, 344.902 )
+shape = SubResource( 1 )
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2( 1188.28, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+position = Vector2( -95.6663, 344.902 )
+shape = SubResource( 1 )
+
+[node name="BackWall" type="StaticBody2D" parent="."]
+position = Vector2( 1205.7, -92.689 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BackWall"]
+position = Vector2( -681.371, 993.392 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="FrontWall" type="StaticBody2D" parent="."]
+position = Vector2( 1191.44, -406.173 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FrontWall"]
+position = Vector2( -681.371, 993.392 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="Back" type="StaticBody2D" parent="."]
+position = Vector2( 1195.14, -1087.2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Back"]
+position = Vector2( -681.371, 993.392 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="Spawner" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HealthUI" parent="CanvasLayer" instance=ExtResource( 9 )]
+rect_scale = Vector2( 3, 3 )
+
+[node name="DialogBox" parent="CanvasLayer" instance=ExtResource( 6 )]
+dialog = [ "Welcome. Press e to continue.", "You are flying in a void. You have no idea why, but you feel the urge to continue.", "What your goal is, you do not know. You know only your desire to accomplish it.", "WASD to move, enter to shoot, and space to dodge." ]
+
+[node name="BeforeSpawn" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="stageTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="stage5Timer" type="Timer" parent="."]
+wait_time = 1.8
+
+[node name="stage5Length" type="Timer" parent="."]
+wait_time = 25.0
+
+[node name="endOfLevel" type="Timer" parent="."]
+wait_time = 8.5
+one_shot = true
+[connection signal="timeout" from="Spawner" to="." method="_on_Spawner_timeout"]
+[connection signal="timeout" from="BeforeSpawn" to="." method="_on_BeforeSpawn_timeout"]
+[connection signal="timeout" from="stage5Timer" to="." method="_on_stage5Timer_timeout"]
+[connection signal="timeout" from="stage5Length" to="." method="_on_stage5Length_timeout"]
+[connection signal="timeout" from="endOfLevel" to="." method="_on_endOfLevel_timeout"]

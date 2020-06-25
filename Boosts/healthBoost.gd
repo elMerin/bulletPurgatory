@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Area2D
 
 
 # Declare member variables here. Examples:
@@ -8,7 +8,7 @@ extends KinematicBody2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$AnimationPlayer.play("fadeIn")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -16,13 +16,6 @@ func _ready():
 #	pass
 
 
-func _on_Hurtbox_area_entered(area):
-	$Stats.health -= area.damage
-	get_parent().get_node("hit").play()
-	area.get_parent().queue_free()
-	
-
-
-func _on_Stats_no_health():
-	get_parent().get_node("die").play()
+func _on_speedBoost_area_entered(area):
+	PlayerStats.health += 1
 	queue_free()

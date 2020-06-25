@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Enemy/boomer.png" type="Texture" id=1]
+[ext_resource path="res://Stats.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Enemy/BoomerangSpawner.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Enemy/Boomer.gd" type="Script" id=4]
+[ext_resource path="res://Overlap/Hurtbox.tscn" type="PackedScene" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 19.928, 19.3967 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 18.6743
+
+[node name="Boomer" type="KinematicBody2D" groups=[
+"Enemy",
+]]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1.39859, -0.874126 )
+shape = SubResource( 1 )
+
+[node name="Stats" parent="." instance=ExtResource( 2 )]
+
+[node name="Hurtbox" parent="." instance=ExtResource( 7 )]
+collision_layer = 16
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2( -1.28157, -0.996769 )
+shape = SubResource( 2 )
+
+[node name="BoomerangSpawner" parent="." instance=ExtResource( 3 )]
+position = Vector2( -0.429276, 26.1859 )
+direction = Vector2( 0, 500 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="activeTimer" type="Timer" parent="."]
+wait_time = 0.001
+one_shot = true
+
+[node name="Dialog" type="Node2D" parent="."]
+position = Vector2( 460.682, -48.891 )
+[connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="activeTimer" to="." method="_on_activeTimer_timeout"]
+
+[editable path="Hurtbox"]

@@ -1,0 +1,68 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Stats.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Enemy/Diver.gd" type="Script" id=2]
+[ext_resource path="res://Enemy/diver.png" type="Texture" id=3]
+[ext_resource path="res://Overlap/Hitbox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Overlap/Hurtbox.tscn" type="PackedScene" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 44.4418, 38.7965 )
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 47.3053
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 45.0352
+height = 6.26059
+
+[node name="Diver" type="KinematicBody2D" groups=[
+"Enemy",
+]]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.340561, 6.90893 )
+shape = SubResource( 1 )
+
+[node name="Stats" parent="." instance=ExtResource( 1 )]
+max_health = 2
+
+[node name="Hurtbox" parent="." instance=ExtResource( 7 )]
+collision_layer = 8
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2( -0.451874, 4.9706 )
+shape = SubResource( 4 )
+
+[node name="Hitbox" parent="." instance=ExtResource( 4 )]
+collision_mask = 2
+damage = 2
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2( -0.277374, 4.71562 )
+shape = SubResource( 3 )
+
+[node name="diveTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="activeTimer" type="Timer" parent="."]
+wait_time = 0.001
+one_shot = true
+
+[node name="Dialog" type="Node2D" parent="."]
+position = Vector2( 460.682, -48.891 )
+[connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="timeout" from="diveTimer" to="." method="_on_diveTimer_timeout"]
+[connection signal="timeout" from="activeTimer" to="." method="_on_activeTimer_timeout"]
+
+[editable path="Hurtbox"]
+
+[editable path="Hitbox"]

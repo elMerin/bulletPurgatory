@@ -1,0 +1,242 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Levels/Level3.gd" type="Script" id=5]
+[ext_resource path="res://skull.png" type="Texture" id=6]
+[ext_resource path="res://Fonts/Manrope-Regular.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=8]
+[ext_resource path="res://UI/HealthUI.tscn" type="PackedScene" id=9]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 94.0905, 594.858 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "end"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer2/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 10 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 10 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "theEnd"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CanvasLayer2/RichTextLabel:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 10 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "hideFace"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("skull:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "faceHidden"
+} ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "showFace"
+length = 5.0
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "animFinished"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("skull:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="DynamicFont" id=5]
+size = 100
+font_data = ExtResource( 7 )
+
+[node name="Level3" type="Node2D"]
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ],
+"_edit_vertical_guides_": [  ]
+}
+
+[node name="Player" parent="." instance=ExtResource( 8 )]
+position = Vector2( 500.692, 710.749 )
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+position = Vector2( -95.6663, 344.902 )
+shape = SubResource( 1 )
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2( 1188.28, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+position = Vector2( -95.6663, 344.902 )
+shape = SubResource( 1 )
+
+[node name="BackWall" type="StaticBody2D" parent="."]
+position = Vector2( 1205.7, -92.689 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BackWall"]
+position = Vector2( -681.371, 993.392 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="FrontWall" type="StaticBody2D" parent="."]
+position = Vector2( 1191.44, -406.173 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FrontWall"]
+position = Vector2( -681.371, 993.392 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="Back" type="StaticBody2D" parent="."]
+position = Vector2( 1195.14, -1087.2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Back"]
+position = Vector2( -681.371, 993.392 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="Spawner" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HealthUI" parent="CanvasLayer" instance=ExtResource( 9 )]
+rect_scale = Vector2( 3, 3 )
+
+[node name="BeforeSpawn" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="stageTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="stage5Timer" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="stage5Length" type="Timer" parent="."]
+wait_time = 40.0
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="endOfLevel" type="Timer" parent="."]
+wait_time = 8.5
+one_shot = true
+
+[node name="endDialog" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/end = SubResource( 4 )
+anims/hideFace = SubResource( 3 )
+anims/showFace = SubResource( 2 )
+
+[node name="skull" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 513.102, 234.672 )
+scale = Vector2( 0.420207, 0.399846 )
+texture = ExtResource( 6 )
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
+margin_left = -294.174
+margin_top = -210.466
+margin_right = 1343.83
+margin_bottom = 1056.53
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer2"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -215.0
+margin_top = -72.0
+margin_right = 215.0
+margin_bottom = 72.0
+custom_fonts/normal_font = SubResource( 5 )
+bbcode_enabled = true
+bbcode_text = "THE END"
+text = "THE END"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="timeout" from="Spawner" to="." method="_on_Spawner_timeout"]
+[connection signal="timeout" from="BeforeSpawn" to="." method="_on_BeforeSpawn_timeout"]
+[connection signal="timeout" from="stage5Timer" to="." method="_on_stage5Timer_timeout"]
+[connection signal="timeout" from="stage5Length" to="." method="_on_stage5Length_timeout"]
+[connection signal="timeout" from="endOfLevel" to="." method="_on_endOfLevel_timeout"]
+[connection signal="timeout" from="endDialog" to="." method="_on_endDialog_timeout"]
