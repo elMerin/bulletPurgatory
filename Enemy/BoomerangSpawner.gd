@@ -13,4 +13,3 @@ func fire():
 	boomerang.direction = direction
 	get_node("../..").add_child(boomerang)
 	boomerang.global_position = global_position
-	$FireAudio.play()

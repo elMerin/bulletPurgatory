@@ -81,8 +81,13 @@ wait_time = 30.0
 [node name="endOfLevel" type="Timer" parent="."]
 wait_time = 8.5
 one_shot = true
+
+[node name="endDialog" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
 [connection signal="timeout" from="Spawner" to="." method="_on_Spawner_timeout"]
 [connection signal="timeout" from="BeforeSpawn" to="." method="_on_BeforeSpawn_timeout"]
 [connection signal="timeout" from="stage5Timer" to="." method="_on_stage5Timer_timeout"]
 [connection signal="timeout" from="stage5Length" to="." method="_on_stage5Length_timeout"]
 [connection signal="timeout" from="endOfLevel" to="." method="_on_endOfLevel_timeout"]
+[connection signal="timeout" from="endDialog" to="." method="_on_endDialog_timeout"]

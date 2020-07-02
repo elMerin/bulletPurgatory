@@ -18,4 +18,5 @@ func _ready():
 
 func _on_speedBoost_area_entered(area):
 	PlayerStats.health += 1
+	get_tree().current_scene.get_node("Sounds/healthBoost").play()
 	queue_free()

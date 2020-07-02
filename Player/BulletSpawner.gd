@@ -25,4 +25,3 @@ func fire():
 	bullet.direction = direction
 	get_node("../..").add_child(bullet)
 	bullet.global_position = global_position
-	$FireAudio.play()

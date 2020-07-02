@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/QFBoostExpired.wav-17e2755b9fa4de0525f415f023e271e1.sample"
+
+[deps]
+
+source_file="res://Music and Sounds/sounds/QFBoostExpired.wav"
+dest_files=[ "res://.import/QFBoostExpired.wav-17e2755b9fa4de0525f415f023e271e1.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

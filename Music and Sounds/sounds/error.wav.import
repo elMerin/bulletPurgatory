@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/error.wav-9a9a2398b2c99d5ffef45aa15c4dd81c.sample"
+
+[deps]
+
+source_file="res://Music and Sounds/sounds/error.wav"
+dest_files=[ "res://.import/error.wav-9a9a2398b2c99d5ffef45aa15c4dd81c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

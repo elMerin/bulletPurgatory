@@ -6,7 +6,7 @@ const Level3 = preload("res://Levels/Level3.tscn")
 const saveName = "user://saveData.json"
 
 var saveInfo = {
-	"level": "level3"
+	"level": "level1"
 }
 
 func _ready():
@@ -15,18 +15,18 @@ func _ready():
 	loadLevel(saveInfo.level, false)
 	$AnimationPlayer.play("fadeIn")
 
-func loadData():
-	var file = File.new()
-	if file.file_exists(saveName):
-		file.open(saveName, File.READ)
-		var data = parse_json(file.get_as_text())
-		file.close()
-		if typeof(data) == TYPE_DICTIONARY:
-			saveInfo = data
-		else:
-			printerr("Corrupted data!")
-	else:
-		pass
+#func loadData():
+#	var file = File.new()
+#	if file.file_exists(saveName):
+#		file.open(saveName, File.READ)
+#		var data = parse_json(file.get_as_text())
+#		file.close()
+#		if typeof(data) == TYPE_DICTIONARY:
+#			saveInfo = data
+#		else:
+#			printerr("Corrupted data!")
+#	else:
+#		pass
 		
 func loadLevel(levelString, reloaded):
 	if(levelString == "level1"):

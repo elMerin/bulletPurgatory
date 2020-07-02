@@ -12,6 +12,7 @@ enum{
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$fireBoomerang.play()
 	velocity = direction
 	goal = Vector2(0,global_position.y+800)
 

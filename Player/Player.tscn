@@ -6,9 +6,9 @@
 [ext_resource path="res://Overlap/Hurtbox.gd" type="Script" id=4]
 [ext_resource path="res://Player/BulletSpawner.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Fonts/Manrope-Regular.ttf" type="DynamicFontData" id=6]
-[ext_resource path="res://Music and Sounds/Evade.wav" type="AudioStream" id=7]
-[ext_resource path="res://Music and Sounds/Hit.wav" type="AudioStream" id=8]
-[ext_resource path="res://Music and Sounds/error.wav" type="AudioStream" id=9]
+[ext_resource path="res://Music and Sounds/sounds/Evade.wav" type="AudioStream" id=7]
+[ext_resource path="res://Music and Sounds/sounds/Hit.wav" type="AudioStream" id=8]
+[ext_resource path="res://Music and Sounds/sounds/error.wav" type="AudioStream" id=9]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 3 )
@@ -123,7 +123,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 0.498039 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 length = 0.1
 loop = true
 tracks/0/type = "method"
@@ -141,13 +141,13 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=6]
 size = 40
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 6 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=7]
 size = 40
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
@@ -172,7 +172,7 @@ anims/Attack = SubResource( 3 )
 anims/Roll = SubResource( 4 )
 
 [node name="Quickfire" type="AnimationPlayer" parent="."]
-anims/Quickfire = SubResource( 6 )
+anims/Quickfire = SubResource( 5 )
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 2
@@ -225,7 +225,7 @@ margin_left = 11.8485
 margin_top = 762.739
 margin_right = 95.8485
 margin_bottom = 831.739
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 6 )
 text = "Fire"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -268,7 +268,7 @@ margin_left = 621.48
 margin_top = 760.831
 margin_right = 774.48
 margin_bottom = 829.831
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 7 )
 text = "Dodge"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -276,12 +276,15 @@ __meta__ = {
 
 [node name="QuickfireTimer" type="Timer" parent="."]
 wait_time = 5.0
+one_shot = true
 
 [node name="attackSpeedBoostTimer" type="Timer" parent="."]
 wait_time = 15.0
+one_shot = true
 
 [node name="speedBoostTimer" type="Timer" parent="."]
 wait_time = 15.0
+one_shot = true
 
 [node name="evade" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )

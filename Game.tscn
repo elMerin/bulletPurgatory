@@ -1,8 +1,14 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
-[ext_resource path="res://Music and Sounds/Hit.wav" type="AudioStream" id=2]
-[ext_resource path="res://Music and Sounds/EnemyDie.wav" type="AudioStream" id=5]
+[ext_resource path="res://Music and Sounds/sounds/Hit.wav" type="AudioStream" id=2]
+[ext_resource path="res://Music and Sounds/sounds/QFBoost.wav" type="AudioStream" id=3]
+[ext_resource path="res://Music and Sounds/sounds/QFBoostExpired.wav" type="AudioStream" id=4]
+[ext_resource path="res://Music and Sounds/sounds/EnemyDie.wav" type="AudioStream" id=5]
+[ext_resource path="res://Music and Sounds/sounds/SBBoost.wav" type="AudioStream" id=6]
+[ext_resource path="res://Music and Sounds/sounds/SBBoostExpired.wav" type="AudioStream" id=7]
+[ext_resource path="res://Music and Sounds/sounds/HBBoost.wav" type="AudioStream" id=8]
+[ext_resource path="res://Music and Sounds/sounds/shoot.wav" type="AudioStream" id=9]
 
 [sub_resource type="Animation" id=1]
 resource_name = "fadeIn"
@@ -134,3 +140,30 @@ stream = ExtResource( 2 )
 
 [node name="die" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 5 )
+
+[node name="healthBoost" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 8 )
+
+[node name="speedBoost" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 6 )
+
+[node name="quickFire" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 3 )
+
+[node name="attackSpeed" type="AudioStreamPlayer" parent="Sounds"]
+
+[node name="quickFireExpired" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 4 )
+
+[node name="attackSpeedExpired" type="AudioStreamPlayer" parent="Sounds"]
+
+[node name="speedBoostExpired" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 7 )
+
+[node name="playerFire" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 9 )
+
+[node name="Music" type="Node" parent="."]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="Music"]
+volume_db = 15.0

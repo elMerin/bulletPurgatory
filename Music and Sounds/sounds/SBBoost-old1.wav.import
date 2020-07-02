@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SBBoost-old1.wav-bd123ad50b0032720350fd607ad15f8b.sample"
+
+[deps]
+
+source_file="res://Music and Sounds/sounds/SBBoost-old1.wav"
+dest_files=[ "res://.import/SBBoost-old1.wav-bd123ad50b0032720350fd607ad15f8b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

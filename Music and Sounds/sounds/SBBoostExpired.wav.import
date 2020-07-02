@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SBBoostExpired.wav-7cd218d49112706f1e77df5a2e8bfa9f.sample"
+
+[deps]
+
+source_file="res://Music and Sounds/sounds/SBBoostExpired.wav"
+dest_files=[ "res://.import/SBBoostExpired.wav-7cd218d49112706f1e77df5a2e8bfa9f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -70,12 +70,7 @@ func fourthKilled():
 		
 func fifthKilled():
 	if get_tree().get_nodes_in_group("Enemy").size()<=1 && stage5Over:
-		$endOfLevel.start()
-		var dialog = PopDialog.instance()
-		dialog.dialog = ["The massacre seems to be at an end... for now.","I still feel drawn forward. I need to proceed."]
-		dialog.set_anchors_and_margins_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_KEEP_SIZE)
-		$CanvasLayer.add_child(dialog)
-		dialog.start()
+		$endDialog.start()
 
 func startStageTimer(seconds):
 	$stageTimer.wait_time = seconds
@@ -160,14 +155,15 @@ func stage5Start():
 
 
 func _on_stage5Timer_timeout():
-	var shooter = Shooter.instance()
-	shooter.position = Vector2(randi()%1000,-100)
-	shooter.MAX_SPEED = 750
-	shooter.ACCELERATION = 750
-	shooter.fireSpeed = rand_range(1.3,1.7)
-	shooter.connect("noHealth", self, "fifthKilled")
-	call_deferred("add_child",shooter)
-	if stage5Over:
+	if !stage5Over:
+		var shooter = Shooter.instance()
+		shooter.position = Vector2(randi()%1000,-100)
+		shooter.MAX_SPEED = 750
+		shooter.ACCELERATION = 750
+		shooter.fireSpeed = rand_range(1.3,1.7)
+		shooter.connect("noHealth", self, "fifthKilled")
+		call_deferred("add_child",shooter)
+	else:
 		$stage5Timer.stop()
 
 func _on_stage5Length_timeout():
@@ -177,3 +173,12 @@ func _on_stage5Length_timeout():
 
 func _on_endOfLevel_timeout():
 		emit_signal("loadLevel", "level2")
+
+
+func _on_endDialog_timeout():
+	$endOfLevel.start()
+	var dialog = PopDialog.instance()
+	dialog.dialog = ["They seem to have stopped coming... for now.","I still feel drawn forward. I need to proceed."]
+	dialog.set_anchors_and_margins_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_KEEP_SIZE)
+	$CanvasLayer.add_child(dialog)
+	dialog.start()

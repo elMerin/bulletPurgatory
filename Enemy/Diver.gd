@@ -45,6 +45,7 @@ func _process(delta):
 				if(global_position.x>player.global_position.x-50 && global_position.x<player.global_position.x+50):
 					velocity = Vector2.ZERO
 					diving = true
+					$diverFall.play()
 					$diveTimer.stop()
 			else:
 				velocity = velocity.move_toward(Vector2(0,DIVE_VELOCITY), DIVE_ACCELERATION*delta)
@@ -57,6 +58,7 @@ func accelerate_towards_point(point, delta):
 func _on_diveTimer_timeout():
 	velocity = Vector2.ZERO
 	diving = true
+	$diverFall.play()
 	
 func _on_Hitbox_area_entered(area):
 	PlayerStats.health -= $Hitbox.damage

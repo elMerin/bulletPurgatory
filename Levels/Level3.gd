@@ -20,9 +20,11 @@ enum{
 
 signal loadLevel
 
-var currentStage = stage5
+onready var audioStreamPlayer = get_tree().current_scene.get_node("Music/MusicPlayer")
+var currentStage = stage1
 var stage5Over = false	
 var reloaded = false
+var endScreen = false
 
 func _ready():
 	#$endDialog.start()
@@ -31,6 +33,16 @@ func _ready():
 	else:
 		stageTimerFinished()		
 	print("This is level 3")
+	
+func _process(delta):
+	if endScreen:
+		if Input.is_action_just_pressed("ui_accept"):
+			emit_signal("loadLevel", "level1")
+			AudioServer.set_bus_mute(0,false)
+		elif Input.is_action_just_pressed("ui_cancel"):
+			get_tree().current_scene.saveInfo.level = "level1"
+			get_tree().current_scene.saveData()
+			get_tree().quit()
 	
 	
 func _on_BeforeSpawn_timeout():
@@ -78,6 +90,8 @@ func startStageTimer(seconds):
 func stageTimerFinished():
 	match currentStage:
 		stage1:
+			audioStreamPlayer.stream = load("res://Music and Sounds/music/track1.wav")
+			audioStreamPlayer.play()
 			var boomer = Boomer.instance()
 			boomer.position = Vector2(500,-100)
 			boomer.connect("noHealth", self, "firstKilled")
@@ -89,6 +103,8 @@ func stageTimerFinished():
 			boomer.get_node("Dialog").add_child(dialog)
 			call_deferred("add_child",boomer)
 		stage2:
+			audioStreamPlayer.stream = load("res://Music and Sounds/music/track2.wav")
+			audioStreamPlayer.play()
 			var boomer = Boomer.instance()
 			boomer.position = Vector2(600,-100)
 			boomer.connect("noHealth", self, "secondKilled")
@@ -99,6 +115,8 @@ func stageTimerFinished():
 			diver.connect("diverFell", self, "secondKilled")
 			call_deferred("add_child",diver)
 		stage3:
+			audioStreamPlayer.stream = load("res://Music and Sounds/music/track3.wav")
+			audioStreamPlayer.play()
 			var diver = Diver.instance()
 			diver.position = Vector2(500,-100)
 			diver.connect("noHealth", self, "thirdKilled")
@@ -115,6 +133,8 @@ func stageTimerFinished():
 			boomer.connect("noHealth", self, "thirdKilled")
 			call_deferred("add_child",boomer)
 		stage4:
+			audioStreamPlayer.stream = load("res://Music and Sounds/music/track4.wav")
+			audioStreamPlayer.play()
 			var diver = Diver.instance()
 			diver.position = Vector2(100,-100)
 			diver.connect("noHealth", self, "fourthKilled")
@@ -159,53 +179,61 @@ func stage5Start():
 
 
 func _on_stage5Timer_timeout():
-	iteration+=1
 	
-	if iteration%2 == 0:
-		var shooter = Shooter.instance()
-		shooter.position = Vector2(randi()%1000,-100)
-		shooter.MAX_SPEED = 750
-		shooter.ACCELERATION = 750
-		shooter.fireSpeed = rand_range(1.3,1.7)
-		shooter.connect("noHealth", self, "fifthKilled")
-		call_deferred("add_child",shooter)
-	elif iteration%3 == 0:
-		var boomer = Boomer.instance()
-		boomer.position = Vector2(randi()%900+100,-100)
-		boomer.connect("noHealth", self, "fifthKilled")
-		call_deferred("add_child",boomer)
-	else:
-		var diver = Diver.instance()
-		diver.position = Vector2(randi()%1000,-100)
-		diver.MAX_SPEED = 750
-		diver.ACCELERATION = 750
-		diver.connect("noHealth", self, "fifthKilled")
-		diver.connect("diverFell", self, "fifthKilled")
-		call_deferred("add_child",diver)
-	
-	if iteration%5 == 0:
-		var healthBoost = HealthBoost.instance()
-		healthBoost.position = Vector2(randi()%900+100,680)
-		call_deferred("add_child",healthBoost)
+	if !stage5Over:		
+		iteration+=1
 		
-	if iteration == 15:
-		var speedBoost = SpeedBoost.instance()
-		speedBoost.position = Vector2(800,680)
-		call_deferred("add_child",speedBoost)
+		if iteration%2 == 0:
+			var shooter = Shooter.instance()
+			shooter.position = Vector2(randi()%1000,-100)
+			shooter.MAX_SPEED = 750
+			shooter.ACCELERATION = 750
+			shooter.fireSpeed = rand_range(1.3,1.7)
+			shooter.connect("noHealth", self, "fifthKilled")
+			call_deferred("add_child",shooter)
+		elif iteration%3 == 0:
+			var boomer = Boomer.instance()
+			boomer.position = Vector2(randi()%800+100,-100)
+			boomer.connect("noHealth", self, "fifthKilled")
+			call_deferred("add_child",boomer)
+		else:
+			var diver = Diver.instance()
+			diver.position = Vector2(randi()%1000,-100)
+			diver.MAX_SPEED = 750
+			diver.ACCELERATION = 750
+			diver.connect("noHealth", self, "fifthKilled")
+			diver.connect("diverFell", self, "fifthKilled")
+			call_deferred("add_child",diver)
+		
+		if iteration%5 == 0:
+			var healthBoost = HealthBoost.instance()
+			healthBoost.position = Vector2(randi()%900+100,680)
+			call_deferred("add_child",healthBoost)
+			
+		if iteration == 15:
+			var speedBoost = SpeedBoost.instance()
+			speedBoost.position = Vector2(800,680)
+			call_deferred("add_child",speedBoost)
+		
+		if iteration == 20:
+			var quickFire = QuickFire.instance()
+			quickFire.position = Vector2(800,680)
+			call_deferred("add_child",quickFire)
+			$stage5Timer.wait_time -= 0.5
 	
-	if iteration == 20:
-		var quickFire = QuickFire.instance()
-		quickFire.position = Vector2(800,680)
-		call_deferred("add_child",quickFire)
-		$stage5Timer.wait_time -= 0.5
-	
-	if stage5Over:
+	else:		
 		$stage5Timer.stop()
 
 func _on_stage5Length_timeout():
 	stage5Over = true
+	$Tween.interpolate_property(audioStreamPlayer, "volume_db",
+		null, -20, 10,
+		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
+	$Tween.connect("tween_completed",self,"tweenDone")
 	
-
+func tweenDone(object, key):
+	audioStreamPlayer.stop()
 
 func _on_endOfLevel_timeout():
 	queue_free()
@@ -221,7 +249,7 @@ func onDialogFinished():
 	
 func animFinished():
 	var dialog = Dialog.instance()
-	dialog.dialog = ["It speaks:\n[color=#FF00FF]It was fun playing with you guys. Go on your way, I won't bother you anymore.[/color]"]
+	dialog.dialog = ["It speaks:                  \n[color=#FF00FF]It was fun playing with you guys. Go on your way, I won't bother you anymore.[/color]"]
 	dialog.connect("dialogFinished", self, "onDialogFinished2")
 	$CanvasLayer.add_child(dialog)
 	
@@ -230,9 +258,10 @@ func onDialogFinished2():
 	
 func faceHidden():
 	$AnimationPlayer.play("end")
+	AudioServer.set_bus_mute(0,true)
 	
 func theEnd():
-	emit_signal("loadLevel", "level1")
+	endScreen = true
 
 	
 

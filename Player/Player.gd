@@ -97,6 +97,7 @@ func quickFire():
 	
 func _on_QuickfireTimer_timeout():
 	$Quickfire.stop()
+	get_tree().current_scene.get_node("Sounds/quickFireExpired").play()
 	
 func speedBoost():
 	speedBoost = true
@@ -104,13 +105,16 @@ func speedBoost():
 
 func _on_speedBoostTimer_timeout():
 	speedBoost = false
+	get_tree().current_scene.get_node("Sounds/speedBoostExpired").play()
 
 func attackSpeedBoost():
 	$Attack.playback_speed = 3
 	$attackSpeedBoostTimer.start()
 
 
+
 func _on_attackSpeedBoostTimer_timeout():
 	$Attack.playback_speed = 1
+	get_tree().current_scene.get_node("Sounds/attackSpeedExpired").play()
 
 
