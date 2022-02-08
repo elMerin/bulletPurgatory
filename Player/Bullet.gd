@@ -3,11 +3,6 @@ extends KinematicBody2D
 var direction = Vector2.ZERO
 var targetHit = false
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_tree().current_scene.get_node("Sounds/playerFire").play()

@@ -200,7 +200,7 @@ anims/hideFace = SubResource( 3 )
 anims/showFace = SubResource( 4 )
 
 [node name="skull" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0 )
+visible = false
 position = Vector2( 513.102, 234.672 )
 scale = Vector2( 0.420207, 0.399846 )
 texture = ExtResource( 6 )
